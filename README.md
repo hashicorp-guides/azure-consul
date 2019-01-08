@@ -50,7 +50,7 @@ This objective of this project is to provide an examples of a single and multi-r
 2. `cd` into the desired Terraform subdirectory: `azure-consul/terraform/[single-region | multi-region]`
 
 3. At this point, you will need to create a `terraform.tfvars` file, which contains the Azure read-only credentials for Consul auto-join.
-    * NOTE: We explicitly add this file to our `.gitignore` file to avoid inadvertantly committing sensitive information. There's a `terraform.tfvars.example` file provided that you can copy and update with your specific values:
+    * NOTE: We explicitly add this file to our `.gitignore` file to avoid inadvertently committing sensitive information. There's a `terraform.tfvars.example` file provided that you can copy and update with your specific values:
 
     * `auto_join_subscription_id`, `auto_join_client_id`, `auto_join_client_secret`, `auto_join_tenant_id` will use the values obtained from creating the read-only auto-join Service Principal created in step #5 of the Deployment Prerequisites earlier.
 
