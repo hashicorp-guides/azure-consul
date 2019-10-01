@@ -4,7 +4,7 @@ resource "azurerm_virtual_machine" "consul" {
   name                  = "${var.consul_datacenter}-${count.index}"
   location              = "${var.location}"
   resource_group_name   = "${var.resource_group_name}"
-  network_interface_ids = ["${element(azurerm_network_interface.consul.*.id,count.index)}"]
+  network_interface_ids = [azurerm_network_interface.consul.*.id[count.index]]
   vm_size               = "${var.vm_size}"
 
   # Uncomment this line to delete the OS disk automatically when deleting the VM
@@ -43,7 +43,7 @@ resource "azurerm_virtual_machine" "consul" {
     }
   }
 
-  tags {
+  tags = {
     consul_datacenter = "${var.consul_datacenter}"
   }
 }
@@ -57,11 +57,11 @@ resource "azurerm_network_interface" "consul" {
 
   ip_configuration {
     name                          = "${var.consul_datacenter}-${count.index}"
-    subnet_id                     = "${element(var.private_subnet_ids,count.index)}"
+    subnet_id                     = var.private_subnet_ids[count.index]
     private_ip_address_allocation = "dynamic"
   }
 
-  tags {
+  tags = {
     consul_datacenter = "${var.consul_datacenter}"
   }
 }

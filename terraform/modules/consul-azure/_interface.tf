@@ -61,7 +61,7 @@ variable "consul_join_wan" {
 
 # Outputs
 output "consul_private_ips" {
-  value = ["${azurerm_network_interface.consul.*.private_ip_address}"]
+  value = azurerm_network_interface.consul.*.private_ip_address
 }
 
 output "os_user" {

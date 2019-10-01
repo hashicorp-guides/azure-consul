@@ -4,7 +4,7 @@ resource "azurerm_virtual_machine" "jumphost" {
   name                  = "${var.network_name}-jumphost-${count.index}"
   location              = "${var.location}"
   resource_group_name   = "${var.resource_group_name}"
-  network_interface_ids = ["${element(azurerm_network_interface.jumphost.*.id,count.index)}"]
+  network_interface_ids = [azurerm_network_interface.jumphost.*.id[count.index]]
   vm_size               = "${var.jumphost_vm_size}"
 
   # Uncomment this line to delete the OS disk automatically when deleting the VM
@@ -42,7 +42,7 @@ resource "azurerm_virtual_machine" "jumphost" {
     }
   }
 
-  tags {
+  tags = {
     network_name = "${var.network_name}-jumphost-${count.index}"
   }
 }
@@ -58,8 +58,8 @@ resource "azurerm_network_interface" "jumphost" {
 
   ip_configuration {
     name                          = "${var.network_name}-jumphost-${count.index}"
-    subnet_id                     = "${element(azurerm_subnet.public.*.id,count.index)}"
-    public_ip_address_id          = "${element(azurerm_public_ip.jumphost.*.id,count.index)}"
+    subnet_id                     = azurerm_subnet.public.*.id[count.index]
+    public_ip_address_id          = azurerm_public_ip.jumphost.*.id[count.index]
     private_ip_address_allocation = "dynamic"
   }
 }
@@ -70,7 +70,7 @@ resource "azurerm_public_ip" "jumphost" {
   name                         = "${var.network_name}-jumphost-${count.index}"
   location                     = "${var.location}"
   resource_group_name          = "${var.resource_group_name}"
-  public_ip_address_allocation = "static"
+  allocation_method = "Static"
 }
 
 resource "random_id" "jumphost" {

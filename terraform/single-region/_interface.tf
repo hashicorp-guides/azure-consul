@@ -1,18 +1,18 @@
 # Required variables (defined in terraform.tfvars)
 variable "auto_join_subscription_id" {
-  type = "string"
+  type = string
 }
 
 variable "auto_join_client_id" {
-  type = "string"
+  type = string
 }
 
 variable "auto_join_client_secret" {
-  type = "string"
+  type = string
 }
 
 variable "auto_join_tenant_id" {
-  type = "string"
+  type = string
 }
 
 # Optional variables
@@ -49,9 +49,20 @@ variable "private_key_filename" {
 # Outputs
 
 output "jumphost_westus_ssh_connection_strings" {
-  value = "${formatlist("ssh-add %s && ssh -A -i %s %s@%s", var.private_key_filename, var.private_key_filename, module.network_westus.jumphost_username, module.network_westus.jumphost_ips_public)}"
+  value = formatlist(
+    "ssh-add %s && ssh -A -i %s %s@%s",
+    var.private_key_filename,
+    var.private_key_filename,
+    module.network_westus.jumphost_username,
+    module.network_westus.jumphost_ips_public,
+  )
 }
 
 output "consul_private_ips_westus" {
-  value = "${formatlist("ssh %s@%s", module.consul_azure_westus.os_user, module.consul_azure_westus.consul_private_ips)}"
+  value = formatlist(
+    "ssh %s@%s",
+    module.consul_azure_westus.os_user,
+    module.consul_azure_westus.consul_private_ips,
+  )
 }
+

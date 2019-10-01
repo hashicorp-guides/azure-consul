@@ -55,7 +55,7 @@ output "virtual_network_id" {
 }
 
 output "jumphost_ips_public" {
-  value = ["${azurerm_public_ip.jumphost.*.ip_address}"]
+  value = azurerm_public_ip.jumphost.*.ip_address
 }
 
 output "jumphost_username" {
@@ -63,9 +63,9 @@ output "jumphost_username" {
 }
 
 output "subnet_public_ids" {
-  value = ["${azurerm_subnet.public.*.id}"]
+  value = azurerm_subnet.public.*.id
 }
 
 output "subnet_private_ids" {
-  value = ["${azurerm_subnet.private.*.id}"]
+  value = azurerm_subnet.private.*.id
 }
